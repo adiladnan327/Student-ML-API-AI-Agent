@@ -1,0 +1,31 @@
+Architecture:
+
++------------------------+
+| User natural language  |
+| "Studied 5 hours..."   |
++-----------+------------+
+            |
+            v
++------------------------+
+| student_agent.py       |
+| - understands message  |
+| - extracts hours       |
+| - calls API            |
++-----------+------------+
+            |
+            v
++------------------------+
+| model_api.py FastAPI   |
+| /predict?hours=5       |
++-----------+------------+
+            |
+            v
++------------------------+
+| student_model.pkl      |
+| Linear Regression      |
++-----------+------------+
+            |
+            v
++------------------------+
+| Prediction + advice    |
++------------------------+
