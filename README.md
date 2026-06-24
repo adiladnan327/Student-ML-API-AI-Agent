@@ -96,7 +96,7 @@ Edit `.env`:
 
 ```text
 OPENAI_API_KEY=your_real_key_here
-OPENAI_MODEL=gpt-5.5
+OPENAI_MODEL=llama-3.3-70b-versatile
 PREDICT_API_URL=http://127.0.0.1:8000/predict
 ```
 
