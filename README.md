@@ -1,58 +1,48 @@
-# Student ML API + Simple AI Agent
+# Student ML API + Scripted Agent + Real LLM Agent
 
-This is a baby-step project to understand how an ML API and an AI agent work together.
+This project shows three things:
 
-## What this project does
-
-The ML API predicts a student's exam score based on study hours.
-
-The agent accepts normal English, extracts the study hours, calls the ML API, and explains the result.
-
-Example:
-
-```text
-You: My son studied 5 hours. How much score can he get?
-
-Agent:
-Based on 5.0 study hours, the ML model predicts a score of around 65.0.
-
-Recommendation: This is a decent score, but there is room to improve.
-```
+1. A machine learning model
+2. A FastAPI prediction API
+3. Two agents:
+   - `student_agent.py` = scripted agent
+   - `llm_agent.py` = real LLM agent
 
 ## Project flow
 
 ```text
 User question
 ↓
-Student Agent
+LLM Agent
 ↓
-Extract study hours
+LLM decides whether to call API
 ↓
-Call ML API
+FastAPI /predict endpoint
 ↓
 ML model predicts score
 ↓
-Agent explains result
+LLM explains result
 ```
 
 ## Files
 
 ```text
-students.csv       - Training data
-train.py           - Trains the ML model
-model_api.py       - FastAPI prediction API
-student_agent.py   - Simple agent that calls the API
-requirements.txt   - Python packages
-Dockerfile         - Optional Docker deployment
+students.csv       - training data
+train.py           - trains the ML model
+model_api.py       - FastAPI ML prediction API
+student_agent.py   - scripted/rule-based agent
+llm_agent.py       - real LLM agent with tool calling
+requirements.txt   - Python dependencies
+.env.example       - sample environment variables
 ```
 
-## Step 1: Install dependencies
+## Step 1: Install packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Step 2: Train the model
+## Step 2: Train the ML model
 
 ```bash
 python train.py
@@ -70,51 +60,62 @@ student_model.pkl
 uvicorn model_api:app --reload
 ```
 
-Open this in your browser:
-
-```text
-http://127.0.0.1:8000
-```
-
-Test prediction:
+Test in browser:
 
 ```text
 http://127.0.0.1:8000/predict?hours=5
 ```
 
-## Step 4: Run the agent
+## Step 4: Run scripted agent
 
-Open another terminal and run:
+Open another terminal:
 
 ```bash
 python student_agent.py
 ```
 
-Then ask:
+This agent uses regex and if/else logic.
+
+## Step 5: Run real LLM agent
+
+Create `.env` from `.env.example`.
+
+Linux/macOS:
+
+```bash
+cp .env.example .env
+```
+
+Windows PowerShell:
+
+```powershell
+Copy-Item .env.example .env
+```
+
+Edit `.env`:
+
+```text
+OPENAI_API_KEY=your_real_key_here
+OPENAI_MODEL=gpt-5.5
+PREDICT_API_URL=http://127.0.0.1:8000/predict
+```
+
+Then run:
+
+```bash
+python llm_agent.py
+```
+
+Ask:
 
 ```text
 My son studied 5 hours. How much score can he get?
 ```
 
-## Optional: Run with Docker
+## Important concept
 
-```bash
-docker build -t student-ml-api .
-docker run -p 8000:8000 student-ml-api
-```
+The LLM does not directly predict the score.
 
-Then run the agent separately:
+The ML model predicts the score.
 
-```bash
-python student_agent.py
-```
-
-## Important note
-
-This is a simple learning project. The "agent" here is a rule-based agent.
-
-A real LLM-based agent can later be added with tools like LangChain, LangGraph, Semantic Kernel, or OpenAI function calling.
-
-## Author
-
-Adil Mohammed
+The LLM understands the question, calls the API, reads the API result, and explains it.

@@ -7,10 +7,10 @@ MODEL_FILE = "student_model.pkl"
 def train_model():
     data = pd.read_csv("students.csv")
 
-    # X = input feature. Here, study hours.
+    # X is the input. Here, input means study hours.
     X = data[["hours"]]
 
-    # y = output/target. Here, exam score.
+    # y is the output. Here, output means exam score.
     y = data["score"]
 
     model = LinearRegression()

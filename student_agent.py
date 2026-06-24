@@ -4,14 +4,6 @@ import requests
 API_URL = "http://127.0.0.1:8000/predict"
 
 def extract_hours(user_message: str):
-    """
-    Very simple agent logic:
-    It looks for patterns like:
-    - 5 hours
-    - 4.5 hrs
-    - studied 6
-    """
-
     patterns = [
         r"(\d+(\.\d+)?)\s*(hours|hour|hrs|hr)",
         r"studied\s+(\d+(\.\d+)?)"
@@ -39,12 +31,6 @@ def call_prediction_api(hours: float):
     }
 
 def explain_prediction(hours: float, predicted_score: float):
-    """
-    This is where the agent adds human-like explanation.
-    The ML API only returns a number.
-    The agent explains what the number means.
-    """
-
     if predicted_score >= 80:
         advice = "This looks strong. The student is likely doing well."
     elif predicted_score >= 60:
@@ -61,7 +47,7 @@ def explain_prediction(hours: float, predicted_score: float):
     )
 
 def agent_response(user_message: str):
-    print("\nAgent thinking...")
+    print("\nScripted Agent thinking...")
     print("1. Reading your question")
 
     hours = extract_hours(user_message)
@@ -89,9 +75,8 @@ def agent_response(user_message: str):
     return explain_prediction(hours, predicted_score)
 
 if __name__ == "__main__":
-    print("Student Advisor Agent")
-    print("Type a question like:")
-    print("My son studied 5 hours. How much score can he get?")
+    print("Scripted Student Advisor Agent")
+    print("Type: My son studied 5 hours. How much score can he get?")
     print("Type 'exit' to stop.\n")
 
     while True:

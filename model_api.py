@@ -40,7 +40,6 @@ def health():
 
 @app.get("/predict")
 def predict(hours: float):
-    # Basic input validation
     if hours < 0:
         return JSONResponse(
             status_code=400,
@@ -57,11 +56,8 @@ def predict(hours: float):
         )
 
     prediction = float(model.predict([[hours]])[0])
-
-    # Keep score within 0-100 range
     prediction = max(0, min(100, prediction))
 
-    # Simple production-style log
     print(
         f"{datetime.now()} | model={MODEL_VERSION} | "
         f"hours={hours} | predicted_score={round(prediction, 2)}"

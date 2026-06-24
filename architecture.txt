@@ -7,10 +7,16 @@ Architecture:
             |
             v
 +------------------------+
-| student_agent.py       |
-| - understands message  |
-| - extracts hours       |
-| - calls API            |
+| llm_agent.py           |
+| Real LLM Agent         |
+| - understands question |
+| - chooses tool/API     |
++-----------+------------+
+            |
+            v
++------------------------+
+| predict_student_score  |
+| Python tool function   |
 +-----------+------------+
             |
             v
@@ -27,5 +33,5 @@ Architecture:
             |
             v
 +------------------------+
-| Prediction + advice    |
+| LLM explains result    |
 +------------------------+
