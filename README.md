@@ -112,6 +112,12 @@ Ask:
 My son studied 5 hours. How much score can he get?
 ```
 
+## Author
+
+```text
+Adil Mohammed
+```
+
 ## Important concept
 
 The LLM does not directly predict the score.
